@@ -130,25 +130,30 @@ body{
     height: 30px;
     padding: 5px;
     background-color: #000;
-    color: #ff9d0a;
+    font-weight: 600;
+    font-family:'Courier New', Courier, monospace;
     text-transform: uppercase;
     border-radius: 0.5rem;
     transition: transform 0.3s;
 }
 
 .one{
+    color: #fff;
     box-shadow: 0 60px 80px rgba(0,0,0,0.60), 0 45px 26px rgba(0,0,0,0.14);
 }
 
 .two{
+    color: #eb8e15;
     box-shadow: 0 0 0 2px rgb(235, 142, 21), 8px 8px 0 0 rgb(231, 137, 14);
 }
 
 .three{
+    color: #417505;
     box-shadow: 5px 5px 0 0 rgb(65, 117, 5), 10px 10px 0 0 rgba(65,117,5,0.6), 15px 15px 0 0 rgba(65,117,5,0.4);
 }
 
 .four{
+    color: #da667b;
     box-shadow: -1px -5px 10px 1px #da667b, 1px 5px 10px 1px #da667b;
 }
 
