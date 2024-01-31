@@ -85,8 +85,9 @@ body{
 
 .op{
     color: #fff;
-    background-color: #ff9d0a;
+    /* background-color: #ff9d0a; */
     font-size: 1.8rem;
+    transition: background 0.5s;
 }
 
 .op2{
@@ -144,11 +145,11 @@ body{
 }
 
 .three{
-    box-shadow: 5px 5px 0 0 rgba(65,117,5,1), 10px 10px 0 0 rgba(65,117,5,0.6), 15px 15px 0 0 rgba(65,117,5,0.4);
+    box-shadow: 5px 5px 0 0 rgb(65, 117, 5), 10px 10px 0 0 rgba(65,117,5,0.6), 15px 15px 0 0 rgba(65,117,5,0.4);
 }
 
 .four{
-    box-shadow: -5px 5px 0px rgba(33, 33, 33, 1), -10px 10px 0px rgba(33, 33, 33, 0.7), -15px 15px 0px rgba(33, 33, 33, 0.4);
+    box-shadow: -1px -5px 10px 1px #da667b, 1px 5px 10px 1px #da667b;
 }
 
 .tBtn.clicked{
