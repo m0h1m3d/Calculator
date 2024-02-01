@@ -27,7 +27,7 @@ body{
     padding: 10px;
     background: #000000;
     border-radius: inherit;
-    transition: font-size 0.5s ease;
+    transition: all 0.5s ease;
     color: #fff;
     text-align: end;
 
@@ -36,11 +36,12 @@ body{
 .prev-display {
     height: 50%;
     width: 100%;
-    background-color: rgb(55, 58, 55);
+    /* background-color: rgb(55, 58, 55); */
     border-radius: inherit;
     padding: 20px;
     font-size: 3rem;
     transition: inherit;
+    opacity: 0;
 }
 
 .solution-display{
@@ -52,6 +53,7 @@ body{
     font-size: 3rem;
     transition: inherit;
     word-wrap: break-word;
+    opacity: 1;
 }
 
 .btns{
