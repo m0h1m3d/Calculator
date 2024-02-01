@@ -14,7 +14,7 @@ body{
 
 .container{
     height: 550px;
-    width: 300px;
+    width: 20rem;
     background: #181616;
     border-radius: 2rem;
     padding: 5px;
@@ -27,17 +27,20 @@ body{
     padding: 10px;
     background: #000000;
     border-radius: inherit;
-}
-
-.prev-display{
-    height: 50%;
-    width: 100%;
-    /* background-color: rgb(55, 58, 55); */
-    border-radius: inherit;
+    transition: font-size 0.5s ease;
     color: #fff;
     text-align: end;
+
+}
+
+.prev-display {
+    height: 50%;
+    width: 100%;
+    background-color: rgb(55, 58, 55);
+    border-radius: inherit;
     padding: 20px;
     font-size: 3rem;
+    transition: inherit;
 }
 
 .solution-display{
@@ -45,10 +48,10 @@ body{
     width: 100%;
     /* background-color: rgb(141, 141, 134); */
     border-radius: inherit;
-    color: #fff;
-    text-align: end;
     padding: 20px;
     font-size: 3rem;
+    transition: inherit;
+    word-wrap: break-word;
 }
 
 .btns{
@@ -101,7 +104,13 @@ body{
     transition: background 0.3s;
 }
 
-.digit:hover{
+.decim{
+    background: #3d3d3d;
+    color: #fff;
+    transition: background 0.3s;
+}
+
+.digit:hover, .decim:hover{
     background: #a4a4a4;
     scale: 1.01;
 }
