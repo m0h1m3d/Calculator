@@ -154,35 +154,33 @@ const equals = function (e) {
         }
       });
     });
-    console.log(operatorNum.length);
 
     if (operatorNum.length === 1) {
       state.opA = operation.slice(0, state.operatorIndex).join("");
       state.opB = operation.slice(state.operatorIndex + 1).join("");
 
       operate(state.opA, state.opB, state.operator);
-      console.log(state);
       operatorNum = [];
     }
 
     if (operatorNum.length > 1) {
       for (let i = 0; i < operatorNum.length; i++) {
         let newOp = extractExpression(operation);
-        console.log(newOp);
 
         state.opA = +newOp[0];
         state.operator = newOp[1];
         state.operatorIndex = 1;
         state.opB = +newOp[2];
 
-        console.log(state.opA, state.opB);
 
         const newVal = operate(state.opA, state.opB, state.operator);
-        console.log(newVal);
         operation.unshift(newVal);
-        console.log(operation);
 
-        solDisplay.textContent = newVal.toFixed(1);
+        state.result = newVal;
+        solDisplay.textContent = +Number.isInteger(state.result)
+        ? +state.result
+        : +state.result.toFixed(1);;
+        console.log(state);
       }
       operatorNum = [];
     }
