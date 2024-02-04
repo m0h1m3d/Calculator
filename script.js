@@ -25,6 +25,9 @@ themeEl.addEventListener("click", (e) => {
     const shadowStyle = target.getAttribute("data-box-shadow");
     const bgColorStyle = target.getAttribute("data-bgcolor");
 
+    localStorage.setItem('bxShadow', JSON.stringify(shadowStyle));
+    localStorage.setItem('bgColor', JSON.stringify(bgColorStyle));
+
     target.classList.add("clicked");
     setTimeout(function () {
       target.classList.remove("clicked");
@@ -268,3 +271,16 @@ btnsEl.addEventListener("click", (e) => {
   addDecimal(e);
   equals(e);
 });
+
+window.addEventListener('load', ()=>{
+  let shadowStyle = localStorage.getItem('bxShadow');
+  shadowStyle = JSON.parse(shadowStyle);
+  
+  let bgColorStyle = localStorage.getItem('bgColor');
+  bgColorStyle = JSON.parse(bgColorStyle);
+  
+  container.style.boxShadow = shadowStyle;
+  opBtns.forEach((op) => {
+  op.style.backgroundColor = bgColorStyle;
+  });
+  })
