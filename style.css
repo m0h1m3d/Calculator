@@ -171,3 +171,17 @@ body{
 .tBtn.clicked{
     transform: scale(1.1);
 }
+
+@media screen and (max-width: 460px) {
+    .container{
+        width: 25rem;
+        transform: translateX(20px);
+    }
+    .btns{
+        padding: 0;
+        gap: 5px;
+    }
+    .theme{
+        margin-right: 0.1rem;
+    }
+}

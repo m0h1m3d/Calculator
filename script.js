@@ -25,8 +25,8 @@ themeEl.addEventListener("click", (e) => {
     const shadowStyle = target.getAttribute("data-box-shadow");
     const bgColorStyle = target.getAttribute("data-bgcolor");
 
-    localStorage.setItem('bxShadow', JSON.stringify(shadowStyle));
-    localStorage.setItem('bgColor', JSON.stringify(bgColorStyle));
+    localStorage.setItem("bxShadow", JSON.stringify(shadowStyle));
+    localStorage.setItem("bgColor", JSON.stringify(bgColorStyle));
 
     target.classList.add("clicked");
     setTimeout(function () {
@@ -44,9 +44,9 @@ const displayNum = function (e) {
   if (e.target.classList.contains("digit")) {
     const target = e.target;
 
-    if (solDisplay.textContent.split("").length >= 9)
+    if (solDisplay.textContent.split("").length >= 7)
       solDisplay.style.fontSize = "1.5rem";
-    if (solDisplay.textContent.split("").length >= 39) return;
+    if (solDisplay.textContent.split("").length >= 20) return;
 
     prevDisplay.style.opacity = "0.7";
     solDisplay.style.opacity = "1";
@@ -172,14 +172,13 @@ const equals = function (e) {
         state.operatorIndex = 1;
         state.opB = +newOp[2];
 
-
         const newVal = operate(state.opA, state.opB, state.operator);
         operation.unshift(newVal);
 
         state.result = newVal;
         solDisplay.textContent = +Number.isInteger(state.result)
-        ? +state.result
-        : +state.result.toFixed(1);;
+          ? +state.result
+          : +state.result.toFixed(1);
         console.log(state);
       }
       operatorNum = [];
@@ -270,15 +269,15 @@ btnsEl.addEventListener("click", (e) => {
   equals(e);
 });
 
-window.addEventListener('load', ()=>{
-  let shadowStyle = localStorage.getItem('bxShadow');
+window.addEventListener("load", () => {
+  let shadowStyle = localStorage.getItem("bxShadow");
   shadowStyle = JSON.parse(shadowStyle);
-  
-  let bgColorStyle = localStorage.getItem('bgColor');
+
+  let bgColorStyle = localStorage.getItem("bgColor");
   bgColorStyle = JSON.parse(bgColorStyle);
-  
+
   container.style.boxShadow = shadowStyle;
   opBtns.forEach((op) => {
-  op.style.backgroundColor = bgColorStyle;
+    op.style.backgroundColor = bgColorStyle;
   });
-  })
+});
