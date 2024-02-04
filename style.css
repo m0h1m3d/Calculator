@@ -42,6 +42,7 @@ body{
     font-size: 3rem;
     transition: inherit;
     opacity: 0;
+    word-wrap: break-word;
 }
 
 .solution-display{
@@ -53,7 +54,6 @@ body{
     font-size: 3rem;
     transition: inherit;
     word-wrap: break-word;
-    opacity: 1;
 }
 
 .btns{

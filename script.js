@@ -13,7 +13,11 @@ let state = {
   opA: "",
   opB: "",
   operator: "",
+  result: 0,
+  operatorIndex: "",
 };
+let operatorNum = [];
+const operators = ["+", "-", "x", "÷"];
 
 themeEl.addEventListener("click", (e) => {
   if (e.target.tagName === "BUTTON") {
@@ -34,38 +38,46 @@ themeEl.addEventListener("click", (e) => {
 });
 
 const displayNum = function (e) {
-  if (
-    e.target.classList.contains("digit") ||
-    e.target.classList.contains("op")
-  ) {
+  if (e.target.classList.contains("digit")) {
     const target = e.target;
 
     if (solDisplay.textContent.split("").length >= 9)
       solDisplay.style.fontSize = "1.5rem";
     if (solDisplay.textContent.split("").length >= 39) return;
 
+    prevDisplay.style.opacity = "0.7";
+    solDisplay.style.opacity = "1";
+
     solDisplay.textContent += target.textContent;
   }
+};
+
+const clearState = function () {
+  state.opA = "";
+  state.opB = "";
+  state.operator = "";
+  state.operatorIndex = "";
+  state.result = 0;
 };
 
 const clearDis = function (e) {
   if (e.target.classList.contains("clear")) {
     solDisplay.style.fontSize = "3rem";
+    solDisplay.style.opacity = "1";
     solDisplay.textContent = "";
+
+    prevDisplay.style.opacity = "0";
     prevDisplay.textContent = "";
-    state.opA = "";
-    state.opB = "";
-    state.operator = "";
+
+    clearState();
     allowDecim = !allowDecim;
   }
 };
 
 const deleteNum = function (e) {
   if (e.target.classList.contains("del")) {
-    const deletedNum = [...solDisplay.textContent].pop();
-    if (deletedNum === ".") allowDecim = !allowDecim;
+    solDisplay.textContent = solDisplay.textContent.slice(0, -1);
 
-    solDisplay.textContent = solDisplay.textContent.replace(deletedNum, "");
     if (solDisplay.textContent.split("").length < 9)
       solDisplay.style.fontSize = "3rem";
   }
@@ -81,7 +93,6 @@ const addNegative = function (e) {
 
 const addDecimal = function (e) {
   if (e.target.classList.contains("decim")) {
-    const target = e.target;
     if (allowDecim) {
       solDisplay.textContent += ".";
       allowDecim = !allowDecim;
@@ -89,55 +100,170 @@ const addDecimal = function (e) {
   }
 };
 
-const equals = function(e,a,b,o){
-  if (e.target.classList.contains("eq")) {
-    prevDisplay.textContent = solDisplay.textContent.replace('=','');
-    prevDisplay.style.opacity = '0.5';
-    prevDisplay.style.fontSize = '2rem';
-    solDisplay.textContent = '';
+const addOp = function (e) {
+  if (e.target.classList.contains("op")) {
+    const target = e.target;
+
+    allowDecim = true;
+
+    if (solDisplay.textContent === "") {
+      return;
+    } else {
+      solDisplay.textContent += target.textContent;
+    }
+    prevDisplay.style.opacity = "0.7";
+    solDisplay.style.opacity = "1";
   }
-}
+};
+
+const extractExpression = function (arr) {
+  let firstOperand = [];
+  while (arr.length > 0 && !"+-x÷".includes(arr[0])) {
+    firstOperand.push(arr.shift());
+  }
+
+  const operator = arr.shift();
+
+  let secondOperand = [];
+  while (arr.length > 0 && !"+-x÷".includes(arr[0])) {
+    secondOperand.push(arr.shift());
+  }
+
+  return [firstOperand.join(""), operator, secondOperand.join("")];
+};
+
+const equals = function (e) {
+  if (e.target.classList.contains("eq")) {
+    prevDisplay.style.opacity = "0.5";
+    prevDisplay.style.fontSize = "2rem";
+    prevDisplay.textContent = solDisplay.textContent.replace("=", "");
+
+    solDisplay.textContent = "";
+
+    const operation = prevDisplay.textContent.split("");
+
+    operation.forEach((operand, i) => {
+      operators.forEach((operator) => {
+        if (operand === operator) {
+          operatorNum.push(operator);
+          state.operatorIndex = i;
+          state.operator = operand;
+        }
+      });
+    });
+    console.log(operatorNum.length);
+
+    if (operatorNum.length === 1) {
+      state.opA = operation.slice(0, state.operatorIndex).join("");
+      state.opB = operation.slice(state.operatorIndex + 1).join("");
+
+      operate(state.opA, state.opB, state.operator);
+      console.log(state);
+      operatorNum = [];
+    }
+
+    if (operatorNum.length > 1) {
+      for (let i = 0; i < operatorNum.length; i++) {
+        let newOp = extractExpression(operation);
+        console.log(newOp);
+
+        state.opA = +newOp[0];
+        state.operator = newOp[1];
+        state.operatorIndex = 1;
+        state.opB = +newOp[2];
+
+        console.log(state.opA, state.opB);
+
+        const newVal = operate(state.opA, state.opB, state.operator);
+        console.log(newVal);
+        operation.unshift(newVal);
+        console.log(operation);
+
+        solDisplay.textContent = newVal.toFixed(1);
+      }
+      operatorNum = [];
+    }
+  }
+};
 
 const add = function (a, b) {
-  console.log("addition", a + b);
-  return a + b;
+  if (operatorNum.length === 1) {
+    state.result = +a + +b;
+    solDisplay.textContent = +Number.isInteger(state.result)
+      ? +state.result
+      : +state.result.toFixed(1);
+  }
+
+  if (operatorNum.length > 1) {
+    state.result = +a + +b;
+    return a + b;
+  }
 };
 
 const subs = function (a, b) {
-  console.log("substraction", a - b);
-  return a - b;
+  if (operatorNum.length === 1) {
+    state.result = +a - +b;
+    solDisplay.textContent = +Number.isInteger(state.result)
+      ? +state.result
+      : +state.result.toFixed(1);
+  }
+
+  if (operatorNum.length > 1) {
+    state.result = +a - +b;
+    return a - b;
+  }
 };
 
 const multi = function (a, b) {
-  console.log("multiplication", a * b);
-  return a * b;
+  if (operatorNum.length === 1) {
+    state.result = +a * +b;
+    solDisplay.textContent = +Number.isInteger(state.result)
+      ? +state.result
+      : +state.result.toFixed(1);
+  }
+
+  if (operatorNum.length > 1) {
+    state.result = +a * +b;
+    return a * b;
+  }
 };
 
 const devide = function (a, b) {
-  console.log("divition", a / b);
-  return a / b;
+  if (operatorNum.length === 1) {
+    state.result = +a / +b;
+    solDisplay.textContent = +Number.isInteger(state.result)
+      ? +state.result
+      : +state.result.toFixed(1);
+  }
+
+  if (operatorNum.length > 1) {
+    state.result = +a / +b;
+    return a / b;
+  }
 };
 
 const operate = function (a, b, o) {
-  state.opA = a;
-  state.opB = b;
-  state.operator = o;
+  if (!a && !b && !o) return;
 
-  o === "+"
-    ? add(a, b)
-    : o === "-"
-    ? subs(a, b)
-    : o === "x"
-    ? multi(a, b)
-    : o === "÷"
-    ? devide(a, b)
-    : "";
+  if (o === "+") {
+    return add(a, b);
+  }
+  if (o === "-") {
+    return subs(a, b);
+  }
+  if (o === "x") {
+    return multi(a, b);
+  }
+  if (o === "÷") {
+    return devide(a, b);
+  }
 };
 
 btnsEl.addEventListener("click", (e) => {
   clearDis(e);
   deleteNum(e);
   displayNum(e);
+  addOp(e);
   addNegative(e);
   addDecimal(e);
   equals(e);
