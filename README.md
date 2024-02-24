@@ -1,4 +1,7 @@
 # Calculator
-a calculator project from the odin project course with my own tweaks!
+a calculator project from the odin project course!
 
- <video><source src="/img/video.mp4" type="video/mp4"><video>
+### feature colors
+![](/img/ornage.png)
+![](/img/green.png)
+![](/img/pink.png)
